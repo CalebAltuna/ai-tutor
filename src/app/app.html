@@ -1,4 +1,9 @@
-  <h1>{{ title() }}</h1>
+  <h1>{{ recipe().name }}</h1>
+<h2> {{recipe().description}}</h2>
   <button (click)="selectSpaghetti()">Show Spaghetti Carbonara</button>
   <button (click)="selectSalad()">Show Caprese Salad</button>
-  
+  <br>
+  <br>
+  <p>{{count()}} </p>
+  <button (click)="decrease()">-</button>
+  <button (click)="increase()">+</button>
