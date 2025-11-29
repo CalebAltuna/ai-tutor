@@ -4,6 +4,7 @@
   <button (click)="selectSalad()">Show Caprese Salad</button>
   <br>
   <br>
-  <p>{{count()}} </p>
+  <pre>{{ adjustedIngredients() | json }}</pre>
+  <p>{{adjustedIngredients()}} </p>
   <button (click)="decrease()">-</button>
   <button (click)="increase()">+</button>
