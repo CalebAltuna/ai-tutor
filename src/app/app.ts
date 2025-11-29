@@ -3,6 +3,7 @@ import { JsonPipe } from '@angular/common'; // Asegúrate de que esta línea est
 import { RouterOutlet } from '@angular/router';
 import { MOCK_RECIPES } from './mock-recipes';
 import { RecipeModel } from './models';
+import { signalUpdateFn } from '@angular/core/primitives/signals';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, JsonPipe], // Y asegúrate de que JsonPipe esté aquí
@@ -14,10 +15,26 @@ export class App {
   protected readonly recipe = signal(MOCK_RECIPES[0]);
 
   protected readonly adjustedIngredients = computed(() =>{
-    this.count;
-    this.recipe;
-    return this.recipe().ingredients;
+    const currentServings=this.count;
+    const currentRecipe=this.recipe;
+    const baselineServings = 2;
+
+    if (!currentRecipe()){
+      return [];
+    }
+    return currentRecipe.ingredients.map(ingredient => {
+      
+      const newQuantity = (ingredient.quantity / baselineServings) * currentServings;
+      return {
+        ...ingredient,
+        quantity: newQuantity,
+      };
+    });
   });
+
+
+
+  
 
   protected selectSpaghetti(): void {
     console.log('Loading Spaghetti Carbonara');
