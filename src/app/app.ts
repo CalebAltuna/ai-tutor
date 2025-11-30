@@ -10,31 +10,27 @@ import { signalUpdateFn } from '@angular/core/primitives/signals';
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
+
 export class App {
   protected readonly title = signal('My Recipe Box');
   protected readonly recipe = signal(MOCK_RECIPES[0]);
-
-  protected readonly adjustedIngredients = computed(() =>{
-    const currentServings=this.count;
-    const currentRecipe=this.recipe;
+  protected readonly servings = signal(2);
+//COMPUTED VARIABLE
+  protected readonly adjustedIngredients = computed(() => {
+    const recipe = this.recipe();
+    const currentServings = this.servings();
     const baselineServings = 2;
 
-    if (!currentRecipe()){
-      return [];
-    }
-    return currentRecipe.ingredients.map(ingredient => {
-      
+    if (!recipe) return [];
+
+    return recipe.ingredients.map(ingredient => {
       const newQuantity = (ingredient.quantity / baselineServings) * currentServings;
       return {
         ...ingredient,
-        quantity: newQuantity,
+        quantity: Math.round(newQuantity * 100) / 100
       };
     });
   });
-
-
-
-  
 
   protected selectSpaghetti(): void {
     console.log('Loading Spaghetti Carbonara');
@@ -46,14 +42,11 @@ export class App {
     this.recipe.set(MOCK_RECIPES[1]);
   }
 
-  protected readonly count = signal(0);
-
-  protected increase(): void{
-    this.count.update(currentValue => currentValue + 1);
-  }
-
-  protected decrease(): void{
-    this.count.update(currentValue => currentValue - 1);
-  }
+protected increase(): void {
+  this.servings.update(currentValue => currentValue + 1);
+}
+protected decrease(): void {
+  this.servings.update(currentValue => currentValue - 1);
+}
 
 }

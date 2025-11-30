@@ -1,10 +1,15 @@
-  <h1>{{ recipe().name }}</h1>
-<h2> {{recipe().description}}</h2>
-  <button (click)="selectSpaghetti()">Show Spaghetti Carbonara</button>
-  <button (click)="selectSalad()">Show Caprese Salad</button>
-  <br>
-  <br>
-  <pre>{{ adjustedIngredients() | json }}</pre>
-  <p>{{adjustedIngredients()}} </p>
-  <button (click)="decrease()">-</button>
-  <button (click)="increase()">+</button>
+<h1>{{ recipe().name }}</h1>
+<h2>{{ recipe().description }}</h2>
+<img [src]="recipe().imgUrl">
+
+
+<button (click)="selectSpaghetti()">Show Spaghetti Carbonara</button>
+<button (click)="selectSalad()">Show Caprese Salad</button>
+
+<br>
+<br>
+
+<pre>{{ adjustedIngredients() | json }}</pre>
+
+<button (click)="decrease()">-</button>
+<button (click)="increase()">+</button>
